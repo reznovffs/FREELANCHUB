@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreelanceHub - Job Board & Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-briefcase"></i>
+                <span>FreelanceHub</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#jobs" class="nav-link">Find Jobs</a>
+                <a href="#post-job" class="nav-link">Post Job</a>
+                <a href="#profile" class="nav-link">Profile</a>
+                <div class="auth-buttons" id="auth-buttons">
+                    <button class="btn btn-outline" onclick="showModal('login-modal')">Login</button>
+                    <button class="btn btn-primary" onclick="showModal('register-modal')">Sign Up</button>
+                </div>
+                <div class="user-menu" id="user-menu" style="display: none;">
+                    <span id="user-name"></span>
+                    <button class="btn btn-outline" onclick="logout()">Logout</button>
+                </div>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Find the Perfect Job or Hire the Best Talent</h1>
+                <p>Connect with skilled freelancers and clients worldwide. Post jobs, apply for opportunities, and grow your business.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" onclick="showModal('register-modal')">Get Started</button>
+                    <button class="btn btn-outline btn-large" onclick="scrollToSection('jobs')">Browse Jobs</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jobs Section -->
+    <section id="jobs" class="jobs-section">
+        <div class="container">
+            <h2>Find Your Next Opportunity</h2>
+            <div class="filters">
+                <input type="text" id="search-input" placeholder="Search jobs..." class="search-input">
+                <select id="category-filter" class="filter-select">
+                    <option value="">All Categories</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="Mobile Development">Mobile Development</option>
+                    <option value="Design">Design</option>
+                    <option value="Writing">Writing</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Other">Other</option>
+                </select>
+                <select id="experience-filter" class="filter-select">
+                    <option value="">All Experience Levels</option>
+                    <option value="entry">Entry Level</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="expert">Expert</option>
+                </select>
+            </div>
+            <div class="jobs-grid" id="jobs-grid">
+                <!-- Jobs will be loaded here -->
+            </div>
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Post Job Section -->
+    <section id="post-job" class="post-job-section">
+        <div class="container">
+            <h2>Post a New Job</h2>
+            <form id="post-job-form" class="job-form">
+                <div class="form-group">
+                    <label for="job-title">Job Title</label>
+                    <input type="text" id="job-title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="job-category">Category</label>
+                    <select id="job-category" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Mobile Development">Mobile Development</option>
+                        <option value="Design">Design</option>
+                        <option value="Writing">Writing</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="job-description">Description</label>
+                    <textarea id="job-description" name="description" rows="5" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="budget-type">Budget Type</label>
+                        <select id="budget-type" name="budget.type" required>
+                            <option value="">Select Type</option>
+                            <option value="fixed">Fixed Price</option>
+                            <option value="hourly">Hourly Rate</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget-amount">Budget Amount ($)</label>
+                        <input type="number" id="budget-amount" name="budget.amount" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="job-experience">Experience Level</label>
+                    <select id="job-experience" name="experience" required>
+                        <option value="">Select Experience</option>
+                        <option value="entry">Entry Level</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="job-duration">Duration</label>
+                    <select id="job-duration" name="duration">
+                        <option value="">Select Duration</option>
+                        <option value="less than 1 week">Less than 1 week</option>
+                        <option value="1-2 weeks">1-2 weeks</option>
+                        <option value="2-4 weeks">2-4 weeks</option>
+                        <option value="1-3 months">1-3 months</option>
+                        <option value="3-6 months">3-6 months</option>
+                        <option value="more than 6 months">More than 6 months</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="job-skills">Skills (comma separated)</label>
+                    <input type="text" id="job-skills" name="skills" placeholder="e.g., JavaScript, React, Node.js">
+                </div>
+                <button type="submit" class="btn btn-primary btn-large">Post Job</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profile" class="profile-section">
+        <div class="container">
+            <h2>My Profile</h2>
+            <div class="profile-content" id="profile-content">
+                <!-- Profile content will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('login-modal')">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-large">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('register-modal')">&times;</span>
+            <h2>Sign Up</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-role">I want to:</label>
+                    <select id="register-role" required>
+                        <option value="">Select Role</option>
+                        <option value="client">Hire Freelancers</option>
+                        <option value="freelancer">Work as Freelancer</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-large">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Job Details Modal -->
+    <div id="job-modal" class="modal">
+        <div class="modal-content large">
+            <span class="close" onclick="closeModal('job-modal')">&times;</span>
+            <div id="job-modal-content">
+                <!-- Job details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Apply Modal -->
+    <div id="apply-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('apply-modal')">&times;</span>
+            <h2>Apply for Job</h2>
+            <form id="apply-form">
+                <div class="form-group">
+                    <label for="apply-proposal">Proposal</label>
+                    <textarea id="apply-proposal" rows="5" required placeholder="Describe why you're the best fit for this job..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="apply-bid">Your Bid ($)</label>
+                    <input type="number" id="apply-bid" required>
+                </div>
+                <div class="form-group">
+                    <label for="apply-duration">Estimated Duration</label>
+                    <input type="text" id="apply-duration" required placeholder="e.g., 2 weeks">
+                </div>
+                <button type="submit" class="btn btn-primary btn-large">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
